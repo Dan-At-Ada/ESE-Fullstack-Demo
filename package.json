@@ -1,0 +1,24 @@
+{
+  "name": "full-stack-demo",
+  "version": "1.0.0",
+  "description": "Full stack demo with React frontend, Express middleware, and MongoDB backend",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:middleware\" \"npm run start:backend\"",
+    "start:frontend": "cd frontend && npm start",
+    "start:middleware": "cd middleware && npm run dev",
+    "start:backend": "cd backend && npm run dev",
+    "install:all": "npm install && cd frontend && npm install && cd ../middleware && npm install && cd ../backend && npm install",
+    "view:users": "node view-users.js",
+    "view:posts": "node view-posts.js",
+    "reset:db": "node reset-database.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.2.0",
+    "dotenv": "^16.4.5",
+    "mongodb": "^6.9.0"
+  }
+}
