@@ -4,11 +4,14 @@
   "description": "Full stack demo with React frontend, Express middleware, and MongoDB backend",
   "main": "index.js",
   "scripts": {
+    "build:environment": "node scripts/build-environment.js",
+    "install:all": "node scripts/install-all.js",
+    "setup:db": "node scripts/setup-db.js",
+    "setup": "chmod +x setup.sh && ./setup.sh",
     "start": "concurrently \"npm run start:frontend\" \"npm run start:middleware\" \"npm run start:backend\"",
     "start:frontend": "cd frontend && npm start",
     "start:middleware": "cd middleware && npm run dev",
     "start:backend": "cd backend && npm run dev",
-    "install:all": "npm install && cd frontend && npm install && cd ../middleware && npm install && cd ../backend && npm install",
     "view:users": "node view-users.js",
     "view:posts": "node view-posts.js",
     "reset:db": "node reset-database.js"

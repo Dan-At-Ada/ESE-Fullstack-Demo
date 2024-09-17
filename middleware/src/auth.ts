@@ -36,5 +36,6 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
 };
 
 export const generateToken = (user: UserPayload): string => {
+  console.log(jwt.sign(user, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '1h' }))
   return jwt.sign(user, process.env.JWT_SECRET || 'your-secret-key', { expiresIn: '1h' });
 };
