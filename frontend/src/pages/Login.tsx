@@ -12,12 +12,21 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Login attempt for email:', email);
     try {
+      // Attempt to log in using the API utility
       const token = await login(email, password);
+      console.log('Login successful, token received');
+      // Store the token in localStorage for persistence
       localStorage.setItem('token', token);
+      // Update the authentication state
       setIsAuthenticated(true);
+      console.log('Authentication state updated');
+      // Redirect to the blog page on successful login
       navigate('/blog');
     } catch (err) {
+      // Display error message if login fails
+      console.error('Login failed:', err);
       setError(err instanceof Error ? err.message : 'An error occurred during login');
     }
   };

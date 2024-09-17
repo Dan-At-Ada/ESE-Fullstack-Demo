@@ -10,16 +10,22 @@ const NewPost: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Creating new post:', { title, content });
     try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('No token found');
-      }
-      
+      // Create a new post using the API utility
       await createPost(title, content);
+      console.log('Post created successfully');
+      // Redirect to the blog page after successful post creation
       navigate('/blog');
     } catch (err) {
-      setError('Failed to create post');
+      console.error('Error creating post:', err);
+      if (err instanceof Error && err.message === 'Authentication token expired') {
+        console.log('Token expired, redirecting to login');
+        // Redirect to login page if the token has expired
+        navigate('/login');
+      } else {
+        setError('Failed to create post');
+      }
     }
   };
 

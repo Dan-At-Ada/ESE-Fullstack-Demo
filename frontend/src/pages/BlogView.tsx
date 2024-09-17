@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchPosts } from '../utils/api';
-import { AuthContext } from '../App';
 
 interface BlogPost {
   _id: string;
@@ -15,16 +14,20 @@ const BlogView: React.FC = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchBlogPosts = async () => {
+      console.log('Fetching blog posts');
       try {
+        // Fetch posts using the API utility
         const data = await fetchPosts();
+        console.log('Posts fetched successfully:', data.length);
         setPosts(data);
       } catch (err) {
+        console.error('Error fetching posts:', err);
         if (err instanceof Error && err.message === 'Authentication token expired') {
-          setIsAuthenticated(false);
+          console.log('Token expired, redirecting to login');
+          // Redirect to login page if the token has expired
           navigate('/login');
         } else {
           setError('Failed to fetch posts');
@@ -33,7 +36,7 @@ const BlogView: React.FC = () => {
     };
 
     fetchBlogPosts();
-  }, [navigate, setIsAuthenticated]);
+  }, [navigate]);
 
   if (error) {
     return <div className="text-red-500">{error}</div>;
